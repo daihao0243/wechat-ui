@@ -27,7 +27,7 @@
     />
   </van-cell-group>
   <van-cell-group title="房屋信息">
-    <Picker
+    <app-picker
       label="房屋类型"
       placeholder="请选择房屋类型"
       :columns="[
@@ -36,7 +36,7 @@
         { id: '2', text: '房屋类型3' },
       ]"
     />
-    <Picker
+    <app-picker
       label="房屋地址"
       placeholder="请选择房屋地址"
       :columns="[
@@ -55,15 +55,7 @@
     <van-field label="账户余额" v-model="prive" readonly />
     <van-field label="共有人已提取" readonly />
     <van-field label="本次提取金额" readonly />
-    <Picker
-      label="转入银行"
-      placeholder="请选择转入银行"
-      :columns="[
-        { id: '0', text: '工商银行' },
-        { id: '1', text: '建设银行' },
-        { id: '2', text: '中国银行' },
-      ]"
-    />
+    <app-picker label="转入银行" placeholder="请选择转入银行" type="bank" />
     <van-field label="转入账户" readonly />
     <van-field label="转入账户名称" readonly />
   </van-cell-group>
@@ -96,7 +88,6 @@
 </template>
 
 <script>
-import Picker from './register/picker';
 export default {
   name: '',
 
@@ -107,9 +98,7 @@ export default {
       showNumberKeyboard: false,
     };
   },
-  components: {
-    Picker,
-  },
+  components: {},
   mounted() {},
 
   methods: {},

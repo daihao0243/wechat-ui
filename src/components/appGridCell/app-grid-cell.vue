@@ -1,9 +1,9 @@
 <template>
-  <li class="grid-item">
+  <div class="grid-item">
     <div class="grid-item-wrap">
       <slot></slot>
     </div>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
   position: relative;
   float: left;
 }
-.grid-item-wrap{
+.grid-item-wrap {
   top: 0;
   left: 0;
   right: 0;

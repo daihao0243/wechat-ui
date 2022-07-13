@@ -1,9 +1,9 @@
 <template>
   <div class="grid">
-    <div class="grid-header">{{title}}</div>
-    <ul class="grid-body">
+    <div class="grid-header">{{ title }}</div>
+    <div class="grid-body">
       <slot></slot>
-    </ul>
+    </div>
   </div>
 </template>
 

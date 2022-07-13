@@ -12,20 +12,37 @@ const router = createRouter({
       keepAlive: true
     },
     component: () => import('@/views/index'),
-  }, {
-    path: '/user',
-    name: 'user',
-    meta: {
-      keepAlive: true
-    },
-    component: () => import('@/views/user'),
-  }, {
-    path: '/user/menu',
-    name: 'menu',
-    meta: {
-      keepAlive: true
-    },
-    component: () => import('@/views/user/menu'),
+    children: [{
+      path: '/',
+      name: 'main',
+      meta: {
+        keepAlive: true
+      },
+      component: () => import('@/views/main'),
+    }, {
+      path: '/tqyw/zftqxx',
+      name: 'zftqxx',
+      meta: {
+        keepAlive: true,
+        title: '住房提取申请'
+      },
+      component: () => import('@/views/tqyw/zftqxx'),
+    }, {
+      path: '/tqyw/xhtqSq',
+      name: 'xhtqSq',
+      meta: {
+        keepAlive: true,
+        title: '离退休提取申请'
+      },
+      component: () => import('@/views/tqyw/xhtqSq'),
+    }, {
+      path: '/page/status/:type',
+      name: 'status',
+      meta: {
+        title: ''
+      },
+      component: () => import('@/views/status'),
+    }]
   }, {
     path: '/login',
     name: 'login',
@@ -58,24 +75,18 @@ const router = createRouter({
     path: '/enter',
     name: 'enter',
     component: () => import('@/views/enter'),
-  }, {
-    path: '/mobile',
-    name: 'mobile',
-    meta: {
-      keepAlive: true
-    },
-    component: () => import('@/views/mobile'),
   }]
 })
-router.beforeEach((to, from, next) => {
-  var userAgent = window.navigator.userAgent;
-  if (to.path == '/' && userAgent.indexOf("Mobile") >= 0 && to.path != '/mobile') {
-    next('/mobile')
-  } else {
-    next()
-  }
+// router.beforeEach((to, from, next) => {
+//   var userAgent = window.navigator.userAgent;
+
+//   if (to.path == '/' && userAgent.indexOf("Mobile") >= 0 && to.path != '/mobile') {
+//     console.log('ggg');
+//     next('/mobile')
+//   }
+//   next()
 
 
-})
+// })
 
 export default router;

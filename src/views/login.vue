@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="login-background" style="background-image: url('/img/bg.jpg')"></div>
+    <div class="login-background" style="background-image: url('/static/images/bg.jpg')"></div>
     <div class="login-background-cover"></div>
     <div class="login">
       <div class="login-logo">
-        <img class="login-logo-img" src="/img/logo.png" />
+        <img class="login-logo-img" src="/static/images/logo.png" />
         <p class="login-logo-text">南宁住房公积金管理中心</p>
       </div>
       <div class="login-input-wrap">
@@ -19,11 +19,7 @@
           <input class="input" placeholder="请填写密码( 8-20位 )" type="password" maxlength="25" />
         </div>
       </div>
-      <img
-        alt="如果看不清楚，请单击图片刷新！"
-        style="display: none"
-        src="/open/frame/captcha.jpg"
-      />
+
       <div class="login-input-wrap">
         <i class="icon iconfont icon-community"></i>
 
@@ -84,10 +80,10 @@ export default {
   mounted() {},
 
   methods: {
-    onLogin(){
+    onLogin() {
       this.$router.push({
-        path:'/'
-      })
+        path: '/',
+      });
     },
     onShowDetail() {
       this.show = true;

@@ -1,11 +1,5 @@
 <template>
-  <!-- <router-view></router-view> -->
-  <router-view v-slot="{ Component }">
-    <keep-alive>
-      <component :is="Component" v-if="$route.meta.keepAlive" :key="$route.name"></component>
-    </keep-alive>
-    <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name">></component>
-  </router-view>
+  <router-view />
 </template>
 
 <script>
@@ -46,7 +40,7 @@ p {
   margin: 0;
   padding: 0;
 }
-.van-config-provider{
+.van-config-provider {
   min-height: calc(100vh - 56px);
 }
 </style>

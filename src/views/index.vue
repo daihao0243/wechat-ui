@@ -1,115 +1,81 @@
 <template>
-  <div class="container">
-    <div class="side">
-      <li class="side-item" v-for="(item, index) in list" :key="index" @click="current = item">
-        <div class="title">
-          <p>{{ item.title }}</p>
-        </div>
-        <div class="side-item-body">
-          <div class="side-item-wrap">
-            <iframe class="side-frame" :src="item.src" frameborder="0"></iframe>
-          </div>
-        </div>
-      </li>
+  <app-header></app-header>
+  <div class="main-container">
+    <account-info v-if="routePath == '/' && isMobile"></account-info>
+    <app-menu v-if="routePath == '/' || !isMobile"></app-menu>
+    <div class="main-body">
+      <router-view v-slot="{ Component }">
+        <keep-alive :exclude="['sysStatus']">
+          <component :is="Component" v-if="$route.meta.keepAlive" :key="$route.name"></component>
+        </keep-alive>
+        <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name">></component>
+      </router-view>
     </div>
-    <div class="main">
-      <div class="browse">
-        <iframe class="browse-frame" :src="current.src" frameborder="0"></iframe>
-      </div>
-    </div>
+    <app-foot></app-foot>
   </div>
 </template>
 
 <script>
-import menu from './menu'
-export default {
-  name: 'WechatUiIndex',
+import accountInfo from '@/components/accountInfo';
+import { sysStore } from '@/stores/sysInfo';
+import appHeader from '@/components/header';
+import appMenu from '@/components/menu';
+import appFoot from '@/components/foot';
 
+export default {
+  name: 'App',
   data() {
     return {
-      current: {},
-      list: menu
+      show: false,
     };
   },
-  components: {
+  computed: {
+    isMobile() {
+      return sysStore().isMobile;
+    },
+    routePath() {
+      return this.$route.path;
+    },
   },
-
+  components: {
+    appHeader,
+    appMenu,
+    accountInfo,
+    appFoot,
+  },
   mounted() {},
-
-  methods: {},
 };
 </script>
 
-<style lang="less" scoped>
-.container {
-  display: flex;
-  height: 100vh;
-}
-.side {
-  width: 192px;
-  min-width: 192px;
-  height: 100%;
-  margin-left: 10px;
-  overflow: auto;
-}
-.main {
-  float: left;
-  margin-left: 310px;
-}
-.browse{
-  width: 400px;
-  height: 100%;
-}
-.browse-frame{
-  width: 100%;
-  height: 100%;
-}
-.side-item {
-  width: 169px;
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  cursor: pointer;
-  background: #fff;
-  border: 1px solid #fff;
-  &:hover {
-    border: 1px solid #00a6f7;
-  }
-  .title {
-    width: 100%;
-    text-align: left;
-    font-size: 14px;
-    padding: 10px 0;
-    color: #999;
-  }
-}
-.side-item-body {
-  width: 169px;
-  height: 300px;
-}
-.side-item-wrap {
-  width: 338px;
-  height: 600px;
-  transform: scale(0.5);
-  transform-origin: left top;
+<style lang="less">
+.main-container {
+  max-width: 1024px;
+  margin: auto;
   position: relative;
-  overflow: hidden;
-  &::before {
-    content: '';
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    z-index: 100;
+  // height: 100vh;
+  background: #fff;
+
+  min-height: ~'calc(100vh - 51px)';
+  // display: flex;
+  .main-body {
+    padding: 20px;
+    // overflow: auto;
+    margin-left: 290px;
+    flex: 1;
+  }
+  .main-body-header {
+    font-size: 25px;
+    padding: 0px 0 20px 0;
   }
 }
-.side-frame {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+@media (max-width: 800px) {
+  .main-container {
+    margin: 10px;
+    background: none;
+    .main-body {
+      padding: 0;
+      margin-left: 0;
+    }
+  }
 }
 </style>

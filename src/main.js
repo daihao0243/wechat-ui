@@ -3,41 +3,56 @@ import {
 } from 'vue'
 import App from './App.vue'
 import router from './router/index'
-import { ConfigProvider } from 'vant';
-// Toast
 import {
-  Toast
+  createPinia
+} from 'pinia'
+import {
+  sysStore
+} from './stores/sysInfo'
+import {
+  ConfigProvider
+} from 'vant';
+import {
+  Toast,
+  Dialog,
+  Notify,
+  ImagePreview
 } from 'vant';
 import 'vant/es/toast/style';
-
-// Dialog
-import {
-  Dialog
-} from 'vant';
 import 'vant/es/dialog/style';
-
-// Notify
-import {
-  Notify
-} from 'vant';
 import 'vant/es/notify/style';
+import 'vant/es/image-preview/style';
 
 import NavBar from './components/nav-bar'
 
-// ImagePreview
-import {
-  ImagePreview
-} from 'vant';
-import 'vant/es/image-preview/style';
+import AppPicker from '@/components/appFormPicker';
+import ResponsiveAction from '@/components/responsiveAction'
 import './assets/iconfont/iconfont.css';
 
+import './assets/less/index.less'
+
+
+const pinia = createPinia()
 const app = createApp(App)
+
+window.addEventListener('resize', e => {
+  if (e.currentTarget.innerWidth <= 800) {
+    sysStore().update(true)
+  } else {
+    sysStore().update(false)
+  }
+});
 app.use(ConfigProvider);
+app.use(pinia);
 app.use(router)
 app.use(Toast);
 app.use(Notify);
 app.use(Dialog);
-app.component('Dialog', Dialog.Component)
+app.component('AppDialog', Dialog.Component)
 app.component('NavBar', NavBar)
+app.component('AppPicker', AppPicker)
+app.component('ResponsiveAction', ResponsiveAction)
 app.use(ImagePreview);
+
+// app.config.globalProperties.isMobile = sysStore().isMobile;
 app.mount('#app')
