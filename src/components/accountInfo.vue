@@ -1,7 +1,7 @@
 <template>
   <div class="account-info">
     <div class="account-info-action">
-      <router-link class="action-button" to="/page/setting"
+      <router-link class="action-button" to="/setting"
         ><van-icon class="icon" name="setting-o"
       /></router-link>
     </div>

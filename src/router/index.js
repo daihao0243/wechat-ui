@@ -31,6 +31,27 @@ const router = createRouter({
           keepAlive: true
         },
         component: () => import('@/views/main'),
+      }, {
+        path: '/setting',
+        name: 'setting',
+        meta: {
+          __title__: '个人设置'
+        },
+        component: () => import('@/views/setting'),
+      }, {
+        path: '/setting/sjhsz',
+        name: 'settingSjhsz',
+        meta: {
+          __title__: '手机号设置'
+        },
+        component: () => import('@/views/setting/sjhsz'),
+      }, {
+        path: '/setting/xgmm',
+        name: 'settingXgmm',
+        meta: {
+          __title__: '修改密码'
+        },
+        component: () => import('@/views/setting/xgmm'),
       }]
     }, {
       path: '/login',
@@ -73,36 +94,26 @@ router.beforeEach((to, from, next) => {
         path,
         title,
       } = item;
-      if (url) {
-        try {
-          let page = import('@/views' + url).then(res => {
-            return res;
-          }).catch(error => {
-            return import('@/views/notfound');
-          })
-          // let component = {
-          //   name,
-          //   template: '<Page></Page>',
-          //   components: {
-          //     'Page': () => page,
-          //   }
-          // }
-
-          router.addRoute('index', {
-            path: url,
-            name,
-            meta: {
-              __title__: title,
-              keepAlive: true,
-              requireLogin: true,
-            },
-            component: () => page
-          });
-        } catch (error) {
-          console.warn(error)
-        }
+      try {
+        let page = import('@/views' + url ? url : '/404').then(res => {
+          return res;
+        }).catch(error => {
+          return import('@/views/notfound');
+        })
+        router.addRoute('index', {
+          path: url,
+          name,
+          meta: {
+            __title__: title,
+            keepAlive: true,
+            requireLogin: true,
+          },
+          component: () => page
+        });
+      } catch (error) {
+        console.warn(error)
       }
-      return {}
+      return item
     })
     if (redirectedUrl) {
       next(redirectedUrl);

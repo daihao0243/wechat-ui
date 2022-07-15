@@ -273,25 +273,25 @@ export const userStore = defineStore({
       "id": 46,
       "title": "贷款结清凭证",
       "parentId": 45,
-      "url": "",
+      "url": "/xxcx/pz/dkjqpz",
       "icon": "/static/images/icons/dkjqpz-icon.png"
     }, {
       "id": 47,
       "title": "还款明细凭证",
       "parentId": 45,
-      "url": "",
+      "url": "/xxcx/pz/hkmxpz",
       "icon": "/static/images/icons/hkmxpz-icon.png"
     }, {
       "id": 48,
       "title": "贷款对账单凭证",
       "parentId": 45,
-      "url": "",
+      "url": "/xxcx/pz/dkdzdpz",
       "icon": "/static/images/icons/dkdzdpz-icon.png"
     }, {
       "id": 49,
       "title": "网点排队情况查询",
       "parentId": 32,
-      "url": "",
+      "url": "/xxcx/pz/wdpdqkcx",
       "icon": "/static/images/icons/pdcx-icon.png"
     }, {
       "id": 50,
@@ -349,6 +349,7 @@ export const userStore = defineStore({
         if (index >= 13) {
           index = 0;
         }
+        item.url = !item.url ? '/404' : item.url
         item.color = 'bg-color-' + index
         index++;
         return item

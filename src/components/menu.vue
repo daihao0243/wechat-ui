@@ -39,15 +39,11 @@
           :key="menuIndex"
           :class="{ 'current-active': currentPath == menu.url }"
         >
-          <router-link class="menu-item" :to="menu.url" v-if="menu.url">
-            <div class="menu-item-title">
-              <div class="icon" :class="[menu.color]">
-                <img class="img" :src="menu.icon" mode="aspectFit" />
-              </div>
-              <p class="title">{{ menu.title }}</p>
-            </div>
-          </router-link>
-          <div class="menu-item" v-else @click="onMenuClick(menu)">
+          <div
+            class="menu-item"
+            v-if="menu.children && menu.children.length"
+            @click="onMenuClick(menu)"
+          >
             <div class="menu-item-title">
               <div class="icon" :class="[menu.color]">
                 <img class="img" :src="menu.icon" mode="aspectFit" />
@@ -56,6 +52,14 @@
               <p class="arrow iconfont icon-right" :class="{ open: menu.open }"></p>
             </div>
           </div>
+          <router-link class="menu-item" :to="menu.url" v-else>
+            <div class="menu-item-title">
+              <div class="icon" :class="[menu.color]">
+                <img class="img" :src="menu.icon" mode="aspectFit" />
+              </div>
+              <p class="title">{{ menu.title }}</p>
+            </div>
+          </router-link>
           <div class="menu-secondary" v-if="menu.open">
             <router-link
               class="menu-secondary-item"
@@ -80,7 +84,7 @@
       class="ift-row ift-row-xs-4 ift-row-sm-6 ift-row-md-10 ift-row-lg-12"
       :title="current.title"
     >
-      <app-grid-cell class="ift-col" v-for="(item, index) in current.list" :key="index">
+      <app-grid-cell class="ift-col" v-for="(item, index) in current.children" :key="index">
         <div class="menu-item menu-item-title" @click="onItemClick(item)">
           <div class="icon" :class="[item.color]">
             <img class="img" :src="item.icon" mode="aspectFit" />
@@ -102,10 +106,9 @@ export default {
       showPopup: false,
       current: {
         title: '',
-        list: [],
+        children: [],
       },
       currentPath: '',
-      menuList: [],
       iconIndex: -1,
     };
   },
@@ -134,7 +137,7 @@ export default {
       this.current.title = '';
       this.current.children = [];
       this.$router.push({
-        path: e.url || '/',
+        path: e.url,
       });
     },
   },
@@ -320,6 +323,7 @@ export default {
   .router-link-exact-active {
     background: #dbdbdb;
   }
+  // .router-link-active{}
   .side-item-header {
     // font-size: 15px;
     height: auto;

@@ -1,13 +1,13 @@
 <template>
   <app-header></app-header>
   <div class="main-container">
-    <div class="main-wrap">
-      <account-info v-if="routePath == '/' && isMobile"></account-info>
-      <app-menu v-if="routePath == '/' || !isMobile"></app-menu>
+    <div class="main-wrap" v-if="routePath == '/' || !isMobile">
+      <account-info v-if="isMobile"></account-info>
+      <app-menu></app-menu>
     </div>
     <div class="main-body">
       <router-view v-slot="{ Component }">
-        <keep-alive>
+        <keep-alive :include="[]">
           <component :is="Component" v-if="$route.meta.keepAlive" :key="$route.name"></component>
         </keep-alive>
         <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name">></component>

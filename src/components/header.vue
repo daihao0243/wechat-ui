@@ -1,18 +1,17 @@
 <template>
   <div class="header">
-    <div class="logo">
+    <router-link to="/" class="logo">
       <img class="logo-img" src="/static/images/logo.png" mode="aspectFit" />
       <p class="logo-text">南宁住房公积金管理中心</p>
-    </div>
+    </router-link>
     <div class="info">
       <p class="user-name">欢迎,邓**</p>
       <!-- <div class="user-icon"><p class="icon iconfont icon-people"></p></div> -->
       <img class="user-img" src="/static/images/icon.png" mode="aspectFit" />
       <div class="user-info">
-        <!-- <text>邓昭礼</text> -->
-        <van-cell-group :border="false">
+        <Setting></Setting>
+        <!-- <van-cell-group :border="false">
           <van-cell icon="qr" title="二维码" is-link :border="false"></van-cell>
-          <!-- contact -->
           <van-cell icon="phone-o" title="手机号设置" is-link :border="false"></van-cell>
           <van-cell title="修改密码" is-link :border="false">
             <template #icon>
@@ -24,15 +23,24 @@
               <i class="van-cell__left-icon iconfont icon-exit"></i>
             </template>
           </van-cell>
-        </van-cell-group>
-        <!-- <button type="warn" plain class="app-m-t-2 app-button">退出登录</button> -->
+        </van-cell-group> -->
       </div>
     </div>
   </div>
   <div class="header-cover"></div>
 </template>
 
-<script></script>
+<script>
+import Setting from './setting';
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    Setting,
+  },
+};
+</script>
 
 <style lang="less" scoped>
 .header {
@@ -105,6 +113,7 @@
 .logo {
   display: flex;
   align-items: center;
+  color: #282828;
 }
 .logo-img {
   width: 40px;

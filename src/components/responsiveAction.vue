@@ -1,6 +1,6 @@
 <template>
   <!-- 响应式按钮 -->
-  <div class="flex">
+  <div class="r-action">
     <slot></slot>
   </div>
 </template>
@@ -20,10 +20,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.flex {
+.r-action {
   display: flex;
   justify-content: center;
   margin: 20px 10px;
+}
+@media (min-width: 800px) {
+  .r-action {
+    // justify-content: flex-end;
+  }
 }
 </style>
 <style>

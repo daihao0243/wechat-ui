@@ -1,7 +1,7 @@
 <template>
   <template v-if="isMobile">
     <van-nav-bar
-      :title="title || $route.meta.title"
+      :title="title || $route.meta.__title__"
       :left-text="leftText"
       fixed
       left-arrow
