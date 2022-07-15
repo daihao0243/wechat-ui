@@ -59,7 +59,7 @@ export default {
   left: 0;
   right: 0;
   position: absolute;
-  padding: 20px 0;
+  padding: 20px 10px;
   text-align: center;
   font-size: 12px;
   color: #666;

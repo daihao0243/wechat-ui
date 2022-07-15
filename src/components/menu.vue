@@ -166,7 +166,6 @@ export default {
 }
 .side-item-container {
   overflow: hidden;
-  padding: 5px;
 }
 .side-item-list {
   width: 25%;
@@ -281,8 +280,8 @@ export default {
     width: auto;
     float: none;
     cursor: pointer;
-
     .menu-item {
+      padding: 0 10px;
       align-items: flex-start;
       &:hover {
         background: #ebebeb;

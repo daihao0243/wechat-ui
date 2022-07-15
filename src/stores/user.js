@@ -112,61 +112,61 @@ export const userStore = defineStore({
       "title": "付款银行变更",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/fkyhbg-icon.png"
     }, {
       "id": 19,
       "title": "付款模式变更",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/fkmsbg-icon.png"
     }, {
       "id": 20,
       "title": "付款方式变更",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/fkfsbg-icon.png"
     }, {
       "id": 21,
       "title": "月缴存额调整",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/yjcetz-icon.png"
     }, {
       "id": 22,
       "title": "个人汇缴",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/grhj-icon.png"
     }, {
       "id": 23,
       "title": "补缴",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/bj-icon.png"
     }, {
       "id": 24,
       "title": "缴存变更",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/jcbg-icon.png"
     }, {
       "id": 25,
       "title": "灵活就业转单位缴存",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/lhjyzdwjc-icon.png"
     }, {
       "id": 26,
       "title": "单位缴存转灵活就业",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/dwjczlhjy-icon.png"
     }, {
       "id": 27,
       "title": "灵活就业销户提取",
       "parentId": 17,
       "url": "/lhjy",
-      "icon": ""
+      "icon": "/static/images/icons/lhjyxhtq-icon.png"
     }, {
       "id": 28,
       "title": "其他业务",
