@@ -1,5 +1,4 @@
 <template>
-  <app-header></app-header>
   <div class="layout">
     <img class="img" src="/static/images/404notfund.png" alt />
     <div class="desc">
@@ -11,16 +10,13 @@
 </template>
 
 <script>
-import appHeader from '@/components/header';
 export default {
   name: 'ChsWebNotfound',
 
   data() {
     return {};
   },
-  components: {
-    appHeader,
-  },
+  components: {},
   mounted() {},
 
   methods: {},

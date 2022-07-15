@@ -94,26 +94,36 @@ router.beforeEach((to, from, next) => {
         path,
         title,
       } = item;
-      try {
-        let page = import('@/views' + url ? url : '/404').then(res => {
-          return res;
-        }).catch(error => {
-          return import('@/views/notfound');
-        })
-        router.addRoute('index', {
-          path: url,
-          name,
-          meta: {
-            __title__: title,
-            keepAlive: true,
-            requireLogin: true,
-          },
-          component: () => page
-        });
-      } catch (error) {
-        console.warn(error)
+      if (url) {
+        try {
+          let page = import('@/views' + url).then(res => {
+            return res;
+          }).catch(error => {
+            return import('@/views/notfound');
+          })
+          // let component = {
+          //   name,
+          //   template: '<Page></Page>',
+          //   components: {
+          //     'Page': () => page,
+          //   }
+          // }
+
+          router.addRoute('index', {
+            path: url,
+            name,
+            meta: {
+              __title__: title,
+              keepAlive: true,
+              requireLogin: true,
+            },
+            component: () => page
+          });
+        } catch (error) {
+          console.warn(error)
+        }
       }
-      return item
+      return {}
     })
     if (redirectedUrl) {
       next(redirectedUrl);
