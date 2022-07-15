@@ -1,5 +1,5 @@
 {
-  "name": "weichatui",
+  "name": "chr-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "less": "^2.7.3",
     "less-loader": "^5.0.0",
+    "moment": "^2.29.4",
     "pinia": "^2.0.15",
     "vant": "^3.5.2",
     "vue": "^3.2.13",

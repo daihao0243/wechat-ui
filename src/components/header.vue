@@ -10,8 +10,22 @@
       <img class="user-img" src="/static/images/icon.png" mode="aspectFit" />
       <div class="user-info">
         <!-- <text>邓昭礼</text> -->
-
-        <button type="warn" plain class="app-m-t-2 app-button">退出登录</button>
+        <van-cell-group :border="false">
+          <van-cell icon="qr" title="二维码" is-link :border="false"></van-cell>
+          <!-- contact -->
+          <van-cell icon="phone-o" title="手机号设置" is-link :border="false"></van-cell>
+          <van-cell title="修改密码" is-link :border="false">
+            <template #icon>
+              <i class="van-cell__left-icon iconfont icon-lock"></i>
+            </template>
+          </van-cell>
+          <van-cell title="安全退出" :border="false" class="exit-cell">
+            <template #icon>
+              <i class="van-cell__left-icon iconfont icon-exit"></i>
+            </template>
+          </van-cell>
+        </van-cell-group>
+        <!-- <button type="warn" plain class="app-m-t-2 app-button">退出登录</button> -->
       </div>
     </div>
   </div>
@@ -48,7 +62,9 @@
   cursor: pointer;
   &:hover {
     .user-info {
-      display: block;
+      // display: block;
+      transform: translateY(0px);
+      opacity: 1;
     }
   }
   .user-name {
@@ -72,14 +88,17 @@
     }
   }
   .user-info {
-    display: none;
-    width: 250px;
+    width: 200px;
     top: 51px;
     right: 10px;
     padding: 10px;
     position: fixed;
     background: #fff;
     box-shadow: 0 2px 4px 0 #0000001a;
+    transition: all 0.4s ease;
+    // display: none;
+    opacity: 0;
+    transform: translateY(-51px);
   }
 }
 
@@ -95,6 +114,9 @@
 .logo-text {
   font-size: 20px;
   font-weight: 500;
+}
+.exit-cell {
+  color: #f44336;
 }
 @media (min-width: 800px) {
   .page {

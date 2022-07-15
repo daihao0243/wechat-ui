@@ -7,11 +7,17 @@
       left-arrow
       placeholder
       @click-left="onClick"
-    />
+    >
+      <template #right>
+        <router-link class="nav-bar-action-item" to="/">
+          <van-icon name="wap-home-o" style="color: #282828" size="20"
+        /></router-link>
+      </template>
+    </van-nav-bar>
   </template>
   <template v-else>
     <div class="nav-bar-title">
-      <h3>{{ title || $route.meta.title }}</h3>
+      <h3>{{ title || $route.meta.__title__ }}</h3>
     </div>
   </template>
 </template>

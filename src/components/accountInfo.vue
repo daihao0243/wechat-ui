@@ -1,5 +1,10 @@
 <template>
   <div class="account-info">
+    <div class="account-info-action">
+      <router-link class="action-button" to="/page/setting"
+        ><van-icon class="icon" name="setting-o"
+      /></router-link>
+    </div>
     <div class="title">
       <strong class="account-info-text">我的总资产</strong>
       <span class="iconfont icon-attention" @click="show = !show"></span>
@@ -34,11 +39,11 @@ export default {
 
 <style lang="less" scoped>
 .account-info {
+  position: relative;
   display: flex;
   flex-direction: column;
   color: #fff;
   padding: 18px;
-
   border-radius: 8px;
   background: #2f78ec;
   box-shadow: 1px 1px 50px 0 rgba(191, 191, 191, 0.3);
@@ -63,6 +68,25 @@ export default {
     }
     .span {
       font-size: 13px;
+    }
+  }
+}
+.account-info-action {
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  button {
+    border: none;
+    background: none;
+  }
+  .action-button {
+    display: inline-block;
+    color: #fff;
+    .icon {
+      font-size: 20px;
     }
   }
 }

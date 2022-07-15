@@ -16,12 +16,10 @@ import {
   Toast,
   Dialog,
   Notify,
-  ImagePreview
 } from 'vant';
 import 'vant/es/toast/style';
 import 'vant/es/dialog/style';
 import 'vant/es/notify/style';
-import 'vant/es/image-preview/style';
 
 import NavBar from './components/nav-bar'
 
@@ -49,10 +47,10 @@ app.use(Toast);
 app.use(Notify);
 app.use(Dialog);
 app.component('AppDialog', Dialog.Component)
+
 app.component('NavBar', NavBar)
 app.component('AppPicker', AppPicker)
 app.component('ResponsiveAction', ResponsiveAction)
-app.use(ImagePreview);
 
 // app.config.globalProperties.isMobile = sysStore().isMobile;
 app.mount('#app')

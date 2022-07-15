@@ -2,91 +2,116 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router'
+import {
+  userStore
+} from '@/stores/user';
 const router = createRouter({
   history: createWebHistory(),
   // history: createWebHashHistory(process.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return {
+        top: 0
+      }
+    }
+  },
   routes: [{
-    path: '/',
-    name: 'index',
-    meta: {
-      keepAlive: true
-    },
-    component: () => import('@/views/index'),
-    children: [{
       path: '/',
-      name: 'main',
+      name: 'index',
       meta: {
         keepAlive: true
       },
-      component: () => import('@/views/main'),
+      component: () => import('@/views/index'),
+      children: [{
+        path: '/',
+        name: 'main',
+        meta: {
+          keepAlive: true
+        },
+        component: () => import('@/views/main'),
+      }]
     }, {
-      path: '/tqyw/zftqxx',
-      name: 'zftqxx',
-      meta: {
-        keepAlive: true,
-        title: '住房提取申请'
-      },
-      component: () => import('@/views/tqyw/zftqxx'),
+      path: '/login',
+      name: 'login',
+      meta: {},
+      component: () => import('@/views/login'),
     }, {
-      path: '/tqyw/xhtqSq',
-      name: 'xhtqSq',
-      meta: {
-        keepAlive: true,
-        title: '离退休提取申请'
-      },
-      component: () => import('@/views/tqyw/xhtqSq'),
+      path: '/register',
+      name: 'register',
+      meta: {},
+      component: () => import('@/views/register'),
     }, {
-      path: '/page/status/:type',
-      name: 'status',
+      path: '/notfound',
+      name: 'notfound',
+      meta: {},
+      component: () => import('@/views/notfound'),
+    }, {
+      path: '/404',
       meta: {
-        title: ''
+        title: '',
       },
-      component: () => import('@/views/status'),
-    }]
-  }, {
-    path: '/login',
-    name: 'login',
-    meta: {
-      keepAlive: true
+      component: () => import('@/views/notfound'),
     },
-    component: () => import('@/views/login'),
-  }, {
-    path: '/register',
-    name: 'register',
-    meta: {
-      keepAlive: true
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/404'
     },
-    component: () => import('@/views/register'),
-  }, {
-    path: '/demo',
-    name: 'demo',
-    meta: {
-      keepAlive: true
-    },
-    component: () => import('@/views/demo'),
-  }, {
-    path: '/demo2',
-    name: 'demo2',
-    meta: {
-      keepAlive: true
-    },
-    component: () => import('@/views/demo2'),
-  }, {
-    path: '/enter',
-    name: 'enter',
-    component: () => import('@/views/enter'),
-  }]
+  ]
 })
-// router.beforeEach((to, from, next) => {
-//   var userAgent = window.navigator.userAgent;
+router.beforeEach((to, from, next) => {
+  const menus = userStore().menu;
+  const hasRouter = userStore().hasRouter;
+  if (!hasRouter) {
+    let redirectedUrl = to.redirectedFrom;
+    userStore().hasRouter = true;
+    let routers = menus.map((item, index) => {
+      let {
+        url,
+        name = 'Page-' + index,
+        path,
+        title,
+      } = item;
+      if (url) {
+        try {
+          let page = import('@/views' + url).then(res => {
+            return res;
+          }).catch(error => {
+            return import('@/views/notfound');
+          })
+          // let component = {
+          //   name,
+          //   template: '<Page></Page>',
+          //   components: {
+          //     'Page': () => page,
+          //   }
+          // }
 
-//   if (to.path == '/' && userAgent.indexOf("Mobile") >= 0 && to.path != '/mobile') {
-//     console.log('ggg');
-//     next('/mobile')
-//   }
-//   next()
+          router.addRoute('index', {
+            path: url,
+            name,
+            meta: {
+              __title__: title,
+              keepAlive: true,
+              requireLogin: true,
+            },
+            component: () => page
+          });
+        } catch (error) {
+          console.warn(error)
+        }
+      }
+      return {}
+    })
+    if (redirectedUrl) {
+      next(redirectedUrl);
+      return
+    }
+  }
+  next()
 
 
-// })
+})
 
 export default router;

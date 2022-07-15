@@ -3,9 +3,8 @@
   <div class="app-foot">
     <div>
       <p>
-        若登录页面出现异常或操作过程中遇到系统报错，<a href="javascript:void(0)" @click="onShowMore"
-          >请联系我们</a
-        >。
+        若登录页面出现异常或操作过程中遇到系统报错，
+        <a href="javascript:void(0)" @click="onShowMore">请联系我们 </a>。
       </p>
     </div>
 

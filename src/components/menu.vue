@@ -35,7 +35,7 @@
       <div class="side-item-container">
         <div
           class="side-item-list"
-          v-for="(menu, menuIndex) in item.list"
+          v-for="(menu, menuIndex) in item.children"
           :key="menuIndex"
           :class="{ 'current-active': currentPath == menu.url }"
         >
@@ -59,7 +59,7 @@
           <div class="menu-secondary" v-if="menu.open">
             <router-link
               class="menu-secondary-item"
-              v-for="(secondary, secondaryindex) in menu.list"
+              v-for="(secondary, secondaryindex) in menu.children"
               :to="secondary.url"
               :key="secondaryindex"
             >
@@ -81,7 +81,7 @@
       :title="current.title"
     >
       <app-grid-cell class="ift-col" v-for="(item, index) in current.list" :key="index">
-        <div class="menu-item menu-item-title" @tap="onItemClick(item)">
+        <div class="menu-item menu-item-title" @click="onItemClick(item)">
           <div class="icon" :class="[item.color]">
             <img class="img" :src="item.icon" mode="aspectFit" />
           </div>
@@ -125,15 +125,16 @@ export default {
         e.open = !e.open;
       } else {
         this.current.title = e.title;
-        this.current.list = e.list;
-        // this.$refs.popup.open('bottom');
+        this.current.children = e.children;
         this.showPopup = true;
       }
     },
     onItemClick(e) {
-      this.$refs.popup.close();
-      uni.navigateTo({
-        url: e.url || '/',
+      this.showPopup = false;
+      this.current.title = '';
+      this.current.children = [];
+      this.$router.push({
+        path: e.url || '/',
       });
     },
   },

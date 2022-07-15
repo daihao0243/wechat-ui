@@ -1,270 +1,358 @@
 import {
   defineStore
 } from 'pinia'
-
+import {
+  toTree
+} from '@/utils';
 export const userStore = defineStore({
   id: 'user',
   state: () => ({
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
     token: '',
+    hasRouter: false,
     menu: [{
-        title: '业务办理',
-        list: [{
-            url: '${ctx}/yyfw/list/wdcx.html',
-            icon: '/static/images/icons/gryy-icon.png',
-            title: '个人预约业务',
-          },
-          {
-            icon: '/static/images/icons/tqyw-icon.png',
-            title: '提取业务',
-            list: [{
-                url: '/tqyw/zftqxx',
-                icon: '/static/images/icons/zftqsq-icon.png',
-                title: '租房提取申请',
-              },
-              {
-                url: '/tqyw/xhtqSq',
-                icon: '/static/images/icons/ltx-icon.png',
-                title: '离退休提取申请',
-              },
-              {
-                url: '${ctx}/ywbl/lztqxx/view.html',
-                icon: '/static/images/icons/lztqsq-icon.png',
-                title: '离职提取申请',
-              },
-              {
-                url: '${ctx}/ywbl/ydtqsm.html',
-                icon: '/static/images/icons/ydtqsq-icon.png',
-                title: '约定提取申请',
-              },
-              {
-                url: '${ctx}/ywbl/ydtqqx/view.html',
-                icon: '/static/images/icons/ydtqqx-icon.png',
-                title: '约定提取取消',
-              },
-              {
-                url: '${ctx}/sdtq/smview.html',
-                icon: '/static/images/icons/sd-icon.png',
-                title: '商贷提取申请',
-              },
-              {
-                url: '${ctx}/hdtq/smview.html',
-                icon: '/static/images/icons/hk-icon.png',
-                title: '公积金还贷提取申请',
-              },
-              {
-                url: '${ctx}/gftq/smview.html',
-                icon: '/static/images/icons/fwfw-icon.png',
-                title: '购房提取申请',
-              },
-            ],
-          },
-          {
-            icon: '/static/images/icons/yhxxwh-icon.png',
-            title: '银行信息维护',
-            list: [{
-                url: '${ctx}//dkyw/dkqy/qy.html',
-                icon: '/static/images/icons/yhkdkqy-icon.png',
-                title: '银行卡代扣签约',
-              },
-              {
-                url: '${ctx}/ywbl/ywkbd/view.html',
-                icon: '/static/images/icons/ywkbd-icon.png',
-                title: '业务卡绑定',
-              },
-              {
-                url: '${ctx}/ywbl/ywkjb/view.html',
-                icon: '/static/images/icons/ywkjb-icon.png',
-                title: '业务卡解绑',
-              },
-            ],
-          },
-          {
-            url: '${ctx}/frame/dkywMain.html',
-            icon: '/static/images/icons/dkyw-icon.png',
-            title: '贷款业务',
-          },
-          {
-            url: '${ctx}/frame/lhjyson',
-            icon: '/static/images/icons/lhjy-icon.png',
-            title: '灵活就业',
-          },
-          {
-            icon: '/static/images/icons/qtyw-icon.png',
-            title: '其他业务',
-            list: [{
-                url: '${ctx}/ksfsqqr/list.html',
-                icon: '/static/images/icons/kfssqqr-icon.png',
-                title: '开发商授权确认',
-              },
-              {
-                url: '${ctx}/ydcrsqgl/findZczxxx/view.html',
-                icon: '/static/images/icons/ydzrsq-icon.png',
-                title: '异地转入申请',
-              },
-              {
-                url: '${ctx}/frame/kstbMain.html',
-                icon: '/static/images/icons/kstb-icon.png',
-                title: '跨省通办',
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: '信息查询',
-        list: [{
-            icon: '/static/images/icons/zhxx-icon.png',
-            title: '账户信息',
-            list: [{
-                url: '${ctx}/xxcx/grjcxx/view.html',
-                icon: '/static/images/icons/jcxx-icon.png',
-                title: '缴存信息',
-              },
-              {
-                url: '${ctx}/xxcx/jcmx/list.html',
-                icon: '/static/images/icons/zhmx-icon.png',
-                title: '账户明细',
-              },
-              {
-                url: '${ctx}/xxcx/dkxx/view.html',
-                icon: '/static/images/icons/dkxx-icon.png',
-                title: '贷款信息',
-              },
-              {
-                url: '${ctx}/xxcx/dkhkmx/view.html',
-                icon: '/static/images/icons/dkhkmx-icon.png',
-                title: '贷款还款明细',
-              },
-            ],
-          },
-          {
-            icon: '/static/images/icons/ywcx-icon.png',
-            title: '业务查询',
-            list: [{
-                url: '${ctx}/xxcx/dkjdcx/view.html',
-                icon: '/static/images/icons/dkjdcx-icon.png',
-                title: '贷款进度查询',
-              },
-              {
-                url: '${ctx}/xxcx/tqjdcx/view.html',
-                icon: '/static/images/icons/gtqjd-icon.png',
-                title: '提取进度查询',
-              },
-              {
-                url: '${ctx}/yyfw/list/yycx.html',
-                icon: '/static/images/icons/yyxxcx-icon.png',
-                title: '预约信息查询',
-              },
-              {
-                url: '${ctx}/ydcrsqgl/ydzrqkcx.html',
-                icon: '/static/images/icons/jdck-icon.png',
-                title: '转入进度查询',
-              },
-              {
-                url: '${ctx}/lhjy/wxhjqkcx',
-                icon: '/static/images/icons/hkqkcx-icon.png',
-                title: '汇缴情况查询',
-              },
-              {
-                url: '${ctx}/lhjy/bgqkcx',
-                icon: '/static/images/icons/bgqkcx-icon.png',
-                title: '变更情况查询',
-              },
-            ],
-          },
-          {
-            icon: '/static/images/icons/pzxz-icon.png',
-            title: '凭证下载',
-            list: [{
-                url: '${ctx}/xxcx/pz/dkjqpzcx',
-                icon: '/static/images/icons/dkjqpz-icon.png',
-                title: '贷款结清凭证',
-              },
-              {
-                url: '${ctx}/xxcx/pz/hkmxpzcx',
-                icon: '/static/images/icons/hkmxpz-icon.png',
-                title: '还款明细凭证',
-              },
-              {
-                url: '${ctx}/xxcx/pz/dkdzdpzcx',
-                icon: '/static/images/icons/dkdzdpz-icon.png',
-                title: '贷款对账单凭证',
-              },
-            ],
-          },
-          {
-            url: '${ctx}/xxcx/wdpdqkcx/list.html',
-            icon: '/static/images/icons/pdcx-icon.png',
-            title: '网点排队情况查询',
-          },
-          {
-            url: '${ctx}/xxcx/dkjsq/view.html',
-            icon: '/static/images/icons/dkjsq-icon.png',
-            title: '贷款计算器',
-          },
-
-          {
-            url: '${ctx}/dkyw/dkqy/qycx.html',
-            icon: '/static/images/icons/yhk-icon.png',
-            title: '银行卡代扣签约查询',
-          },
-        ],
-      },
-      {
-        title: '资讯动态',
-        list: [{
-            url: '${ctx}/zxdt/newlist/view.html',
-            icon: '/static/images/icons/xw-icon.png',
-            title: '新闻动态',
-          },
-          {
-            url: '${ctx}/zxdt/zcfglist/view.html',
-            icon: '/static/images/icons/zcfg-icon.png',
-            title: '政策法规',
-          },
-          {
-            url: '${ctx}/zxdt/zxjbwd/view.html',
-            icon: '/static/images/icons/fwwd-icon.png',
-            title: '业务网点',
-          },
-          {
-            url: '${ctx}/zxdt/dkll/view.html',
-            icon: '/static/images/icons/ll-icon.png',
-            title: '公积金利率',
-          },
-          {
-            url: '${ctx}/zxdt/zxdh/view.html',
-            icon: '/static/images/icons/zxdh-icon.png',
-            title: '咨询电话',
-          },
-        ],
-      },
-    ]
+      "id": 1,
+      "title": "业务办理",
+      "parentId": 0
+    }, {
+      "id": 2,
+      "title": "个人预约业务",
+      "parentId": 1,
+      "url": "/tqyw/wdcx",
+      "icon": "/static/images/icons/gryy-icon.png"
+    }, {
+      "id": 3,
+      "title": "提取业务",
+      "parentId": 1,
+      "icon": "/static/images/icons/tqyw-icon.png"
+    }, {
+      "id": 4,
+      "title": "租房提取申请",
+      "parentId": 3,
+      "url": "/tqyw/zftqxx",
+      "icon": "/static/images/icons/zftqsq-icon.png"
+    }, {
+      "id": 5,
+      "title": "离退休提取申请",
+      "parentId": 3,
+      "url": "/tqyw/xhtqSq",
+      "icon": "/static/images/icons/ltx-icon.png"
+    }, {
+      "id": 6,
+      "title": "离职提取申请",
+      "parentId": 3,
+      "url": "",
+      "icon": "/static/images/icons/lztqsq-icon.png"
+    }, {
+      "id": 7,
+      "title": "约定提取申请",
+      "parentId": 3,
+      "url": "",
+      "icon": "/static/images/icons/ydtqsq-icon.png"
+    }, {
+      "id": 8,
+      "title": "约定提取取消",
+      "parentId": 3,
+      "url": "",
+      "icon": "/static/images/icons/ydtqqx-icon.png"
+    }, {
+      "id": 9,
+      "title": "商贷提取申请",
+      "parentId": 3,
+      "url": "",
+      "icon": "/static/images/icons/sd-icon.png"
+    }, {
+      "id": 10,
+      "title": "公积金还贷提取申请",
+      "parentId": 3,
+      "url": "",
+      "icon": "/static/images/icons/hk-icon.png"
+    }, {
+      "id": 11,
+      "title": "购房提取申请",
+      "parentId": 3,
+      "url": "",
+      "icon": "/static/images/icons/fwfw-icon.png"
+    }, {
+      "id": 12,
+      "title": "银行信息维护",
+      "parentId": 1,
+      "icon": "/static/images/icons/yhxxwh-icon.png"
+    }, {
+      "id": 13,
+      "title": "银行卡代扣签约",
+      "parentId": 12,
+      "url": "",
+      "icon": "/static/images/icons/yhkdkqy-icon.png"
+    }, {
+      "id": 14,
+      "title": "业务卡绑定",
+      "parentId": 12,
+      "url": "",
+      "icon": "/static/images/icons/ywkbd-icon.png"
+    }, {
+      "id": 15,
+      "title": "业务卡解绑",
+      "parentId": 12,
+      "url": "",
+      "icon": "/static/images/icons/ywkjb-icon.png"
+    }, {
+      "id": 16,
+      "title": "贷款业务",
+      "parentId": 1,
+      "url": "",
+      "icon": "/static/images/icons/dkyw-icon.png"
+    }, {
+      "id": 17,
+      "title": "灵活就业",
+      "parentId": 1,
+      "icon": "/static/images/icons/lhjy-icon.png"
+    }, {
+      "id": 18,
+      "title": "付款银行变更",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 19,
+      "title": "付款模式变更",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 20,
+      "title": "付款方式变更",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 21,
+      "title": "月缴存额调整",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 22,
+      "title": "个人汇缴",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 23,
+      "title": "补缴",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 24,
+      "title": "缴存变更",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 25,
+      "title": "灵活就业转单位缴存",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 26,
+      "title": "单位缴存转灵活就业",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 27,
+      "title": "灵活就业销户提取",
+      "parentId": 17,
+      "url": "/lhjy",
+      "icon": ""
+    }, {
+      "id": 28,
+      "title": "其他业务",
+      "parentId": 1,
+      "icon": "/static/images/icons/qtyw-icon.png"
+    }, {
+      "id": 29,
+      "title": "开发商授权确认",
+      "parentId": 28,
+      "url": "",
+      "icon": "/static/images/icons/kfssqqr-icon.png"
+    }, {
+      "id": 30,
+      "title": "异地转入申请",
+      "parentId": 28,
+      "url": "",
+      "icon": "/static/images/icons/ydzrsq-icon.png"
+    }, {
+      "id": 31,
+      "title": "跨省通办",
+      "parentId": 28,
+      "url": "",
+      "icon": "/static/images/icons/kstb-icon.png"
+    }, {
+      "id": 32,
+      "title": "信息查询",
+      "parentId": 0
+    }, {
+      "id": 33,
+      "title": "账户信息",
+      "parentId": 32,
+      "icon": "/static/images/icons/zhxx-icon.png"
+    }, {
+      "id": 34,
+      "title": "缴存信息",
+      "parentId": 33,
+      "url": "/xxcx/zhxx/jcxx",
+      "icon": "/static/images/icons/jcxx-icon.png"
+    }, {
+      "id": 35,
+      "title": "账户明细",
+      "parentId": 33,
+      "url": "/xxcx/zhxx/zhmx",
+      "icon": "/static/images/icons/zhmx-icon.png"
+    }, {
+      "id": 36,
+      "title": "贷款信息",
+      "parentId": 33,
+      "url": "/xxcx/zhxx/dkxx",
+      "icon": "/static/images/icons/dkxx-icon.png"
+    }, {
+      "id": 37,
+      "title": "贷款还款明细",
+      "parentId": 33,
+      "url": "/xxcx/zhxx/dkhkmx",
+      "icon": "/static/images/icons/dkhkmx-icon.png"
+    }, {
+      "id": 38,
+      "title": "业务查询",
+      "parentId": 32,
+      "icon": "/static/images/icons/ywcx-icon.png"
+    }, {
+      "id": 39,
+      "title": "贷款进度查询",
+      "parentId": 38,
+      "url": "",
+      "icon": "/static/images/icons/dkjdcx-icon.png"
+    }, {
+      "id": 40,
+      "title": "提取进度查询",
+      "parentId": 38,
+      "url": "",
+      "icon": "/static/images/icons/gtqjd-icon.png"
+    }, {
+      "id": 41,
+      "title": "预约信息查询",
+      "parentId": 38,
+      "url": "",
+      "icon": "/static/images/icons/yyxxcx-icon.png"
+    }, {
+      "id": 42,
+      "title": "转入进度查询",
+      "parentId": 38,
+      "url": "",
+      "icon": "/static/images/icons/jdck-icon.png"
+    }, {
+      "id": 43,
+      "title": "汇缴情况查询",
+      "parentId": 38,
+      "url": "",
+      "icon": "/static/images/icons/hkqkcx-icon.png"
+    }, {
+      "id": 44,
+      "title": "变更情况查询",
+      "parentId": 38,
+      "url": "",
+      "icon": "/static/images/icons/bgqkcx-icon.png"
+    }, {
+      "id": 45,
+      "title": "凭证下载",
+      "parentId": 32,
+      "icon": "/static/images/icons/pzxz-icon.png"
+    }, {
+      "id": 46,
+      "title": "贷款结清凭证",
+      "parentId": 45,
+      "url": "",
+      "icon": "/static/images/icons/dkjqpz-icon.png"
+    }, {
+      "id": 47,
+      "title": "还款明细凭证",
+      "parentId": 45,
+      "url": "",
+      "icon": "/static/images/icons/hkmxpz-icon.png"
+    }, {
+      "id": 48,
+      "title": "贷款对账单凭证",
+      "parentId": 45,
+      "url": "",
+      "icon": "/static/images/icons/dkdzdpz-icon.png"
+    }, {
+      "id": 49,
+      "title": "网点排队情况查询",
+      "parentId": 32,
+      "url": "",
+      "icon": "/static/images/icons/pdcx-icon.png"
+    }, {
+      "id": 50,
+      "title": "贷款计算器",
+      "parentId": 32,
+      "url": "",
+      "icon": "/static/images/icons/dkjsq-icon.png"
+    }, {
+      "id": 51,
+      "title": "银行卡代扣签约查询",
+      "parentId": 32,
+      "url": "",
+      "icon": "/static/images/icons/yhk-icon.png"
+    }, {
+      "id": 52,
+      "title": "资讯动态",
+      "parentId": 0
+    }, {
+      "id": 53,
+      "title": "新闻动态",
+      "parentId": 52,
+      "url": "/zxdt/news",
+      "icon": "/static/images/icons/xw-icon.png"
+    }, {
+      "id": 54,
+      "title": "政策法规",
+      "parentId": 52,
+      "url": "/zxdt/zcfg",
+      "icon": "/static/images/icons/zcfg-icon.png"
+    }, {
+      "id": 55,
+      "title": "业务网点",
+      "parentId": 52,
+      "url": "/zxdt/ywwd",
+      "icon": "/static/images/icons/fwwd-icon.png"
+    }, {
+      "id": 56,
+      "title": "公积金利率",
+      "parentId": 52,
+      "url": "/zxdt/gjjll",
+      "icon": "/static/images/icons/ll-icon.png"
+    }, {
+      "id": 57,
+      "title": "咨询电话",
+      "parentId": 52,
+      "url": "",
+      "icon": "/static/images/icons/zxdh-icon.png"
+    }]
   }),
 
   actions: {
     getMenu() {
-      let index = 0;
-      this.menu.forEach((item) => {
-        item.list.forEach((element) => {
-          ++index;
-          if (index >= 13) {
-            index = 0;
-          }
-          let _index = 0;
-          element.color = 'bg-color-' + index;
-          element.list &&
-            element.list.forEach((list) => {
-              ++_index;
-              if (_index >= 13) {
-                _index = 0;
-              }
-              list.color = 'bg-color-' + _index;
-            });
-        });
-      });
-      return this.menu
+      let index = 0
+      return toTree(this.menu.map((item) => {
+        if (index >= 13) {
+          index = 0;
+        }
+        item.color = 'bg-color-' + index
+        index++;
+        return item
+      }), 'id', 'parentId')
     },
     logout() {
       localStorage.removeItem('token');
@@ -291,72 +379,5 @@ export const userStore = defineStore({
      * Attempt to login a user
      * @param {Object} userInfo 
      */
-    async login(userInfo) {
-      return new Promise((resolve, reject) => {
-        loginByPhone(userInfo.phone, userInfo.vcode).then(res => {
-          if (res.code != 200) {
-            return resolve(res);
-          }
-          localStorage.setItem('token', res.data.token);
-          getCustomerInfo(res.userId).then(user => {
-            let userInfo = {
-              loginStatus: res.loginStatus,
-              userId: res.userId,
-              id: res.id,
-              isAudit: res.isAudit,
-              childrenDepartements: res.childrenDepartements,
-              departementId: res.departementId,
-              auditLevel: res.auditLevel,
-              customerManager: res.customerManager,
-              customerManagerPhone: res.customerManagerPhone,
-            }
-            userInfo = Object.assign(userInfo, user.map);
-            localStorage.setItem('user', JSON.stringify(userInfo));
-            this.$patch({
-              user: userInfo,
-              token: res.data.token
-            })
-            resolve(res);
-          })
-        }).catch(error => {
-          reject(error);
-        })
-      })
-
-    },
-    async loginBySms(userInfo) {
-
-      return new Promise((resolve, reject) => {
-        smsLogin(userInfo.phone, userInfo.loginCode).then(res => {
-          if (res.code != 200) {
-            return resolve(res);
-          }
-          localStorage.setItem('token', res.data.token);
-          getCustomerInfo(res.userId).then(user => {
-            let userInfo = {
-              loginStatus: res.loginStatus,
-              userId: res.userId,
-              id: res.id,
-              isAudit: res.isAudit,
-              childrenDepartements: res.childrenDepartements,
-              departementId: res.departementId,
-              auditLevel: res.auditLevel,
-              customerManager: res.customerManager,
-              customerManagerPhone: res.customerManagerPhone,
-            }
-            userInfo = Object.assign(userInfo, user.map);
-            localStorage.setItem('user', JSON.stringify(userInfo));
-            this.$patch({
-              user: userInfo,
-              token: res.data.token
-            })
-            resolve(res);
-          })
-        }).catch(error => {
-          reject(error);
-        })
-      })
-
-    },
   },
 })

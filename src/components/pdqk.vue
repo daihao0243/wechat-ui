@@ -52,6 +52,7 @@ export default {
 
 <style lang="less" scoped>
 .table {
+  width: 100%;
   th {
     color: #666;
   }

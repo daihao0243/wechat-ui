@@ -43,4 +43,15 @@ p {
 .van-config-provider {
   min-height: calc(100vh - 56px);
 }
+.app-tip {
+  margin: 10px;
+  color: #666666;
+  font-size: 13px;
+}
+
+.cell-list-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 </style>
