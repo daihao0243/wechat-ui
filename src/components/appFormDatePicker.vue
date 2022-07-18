@@ -10,54 +10,56 @@
     @click="showPicker = true"
     :rules="rules"
   />
-  <van-popup v-model:show="showPicker" position="bottom">
-    <div class="popup-header">
-      <p class="title">选择日期</p>
-      <button class="close-popup-btn" type="button" @click="showPicker = false">
-        <van-icon name="cross" />
-      </button>
-    </div>
-    <app-date
-      v-model="dateval"
-      v-if="reload"
-      :format="format"
-      :range="range"
-      :min-date="new Date()"
-    ></app-date>
-    <responsive-action>
-      <van-button round block type="primary" @click="onConfirm"> 确定 </van-button>
-    </responsive-action>
-  </van-popup>
+  <datePicker
+    v-model:show="showPicker"
+    v-model="dateValue"
+    :format="format"
+    :range="range"
+    :min-date="minDate"
+    :max-date="maxDate"
+    @update:modelValue="$emit('update:modelValue', $event)"
+  ></datePicker>
 </template>
 
 <script>
 import { sysStore } from '@/stores/sysInfo';
 import { dateFormat } from '@/utils';
+import datePicker from '@/components/app-date/picker';
 
 export default {
   name: '',
   data() {
     return {
-      dateval: [],
+      dateValue: '',
       val: '',
       showPicker: false,
       reload: true,
     };
   },
-
+  components: {
+    datePicker,
+  },
   props: {
     required: {
       type: Boolean,
       default: false,
     },
-    modelValue: [String, Array],
+    modelValue: [String, Array, Object],
     label: String,
     rules: Array,
     placeholder: String,
     range: Boolean,
     format: {
       type: String,
-      default: 'YYYYMMDD',
+      default: 'YYYY-MM-DD',
+    },
+    minDate: {
+      type: Object,
+      default: null,
+    },
+    maxDate: {
+      type: Object,
+      default: null,
     },
   },
   watch: {
@@ -69,8 +71,15 @@ export default {
     },
     modelValue: {
       handler(e) {
-        this.val = dateFormat(e, this.format);
-        this.dateval = e;
+        if (e && e.length) {
+          if (this.range) {
+            this.val = dateFormat(e[0], this.format) + '-' + dateFormat(e[1], this.format);
+            this.dateValue = e;
+          } else {
+            this.val = dateFormat(e, this.format);
+            this.dateValue = e;
+          }
+        }
       },
       immediate: true,
     },
@@ -82,35 +91,9 @@ export default {
   },
   mounted() {},
 
-  methods: {
-    onConfirm() {
-      this.val = this.range ? this.dateval.join('-') : this.dateval;
-      this.$emit('update:modelValue', this.dateval);
-      this.showPicker = false;
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style lang="less" scoped>
-.popup-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 40px;
-  border-bottom: 1px solid #ebebeb;
-  .ttile {
-  }
-  .close-popup-btn {
-    cursor: pointer;
-    top: 8px;
-    right: 10px;
-    position: absolute;
-    outline: none;
-    border: none;
-    background: none;
-    font-size: 20px;
-  }
-}
 </style>

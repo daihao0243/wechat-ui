@@ -1,21 +1,36 @@
 <template>
-  <van-field
-    :required="required"
-    v-model="val"
-    is-link
-    readonly
-    name="picker"
-    :label="label"
-    :placeholder="placeholder"
-    @click="showPicker = true"
-    :rules="rules"
-  />
-  <van-popup v-model:show="showPicker" position="bottom">
-    <van-picker :columns="list" @confirm="onConfirm" @cancel="showPicker = false" />
-  </van-popup>
+  <div class="field-item">
+    <van-field
+      :required="required"
+      v-model="val"
+      is-link
+      readonly
+      name="picker"
+      :label="label"
+      :placeholder="placeholder"
+      @click="onFieldClick"
+      :rules="rules"
+    />
+    <van-popup v-if="isMobile" v-model:show="showPicker" position="bottom">
+      <van-picker :columns="list" @confirm="onConfirm" @cancel="showPicker = false" />
+    </van-popup>
+    <div v-else-if="showPicker" class="select-drawer" @click.stop="">
+      <ul class="select-drawer-body">
+        <li
+          class="select-drawer-item"
+          v-for="(item, index) in list"
+          :key="index"
+          @click="onItemClick(item)"
+        >
+          <span>{{ item.text }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
+import { sysStore } from '@/stores/sysInfo';
 export default {
   name: '',
   data() {
@@ -24,7 +39,6 @@ export default {
       showPicker: false,
     };
   },
-
   props: {
     required: {
       type: Boolean,
@@ -38,15 +52,32 @@ export default {
     placeholder: String,
   },
   watch: {
-    value(e) {
-      let v =
-        this.columns.find((item) => {
-          return item.id == e;
-        }) || {};
-      this.val = v.id;
+    modelValue: {
+      handler(e) {
+        let v =
+          (this.list &&
+            this.list.find((item) => {
+              return item.id == e;
+            })) ||
+          {};
+        this.val = v.text;
+      },
+      immediate: true,
+    },
+    showPicker(e) {
+      if (!this.isMobile && !e) {
+        document.body.removeEventListener('click', this.onShowPicker, false);
+      }
+    },
+    isMobile() {
+      this.showPicker = false;
+      document.body.removeEventListener('click', this.onShowPicker, false);
     },
   },
   computed: {
+    isMobile() {
+      return sysStore().isMobile;
+    },
     list() {
       let columns = this.columns;
       if (this.type == 'bank') {
@@ -79,10 +110,6 @@ export default {
           { id: '0000804', text: '分中心桂林管理部' },
           { id: '0000802', text: '分中心柳州管理部' },
           { id: '0000803', text: '分中心玉林管理部' },
-          { id: '', text: '请选择' },
-          { id: '0', text: '贷款' },
-          { id: '1', text: '提取' },
-          { id: '2', text: '缴存' },
         ];
       }
       return columns;
@@ -91,14 +118,61 @@ export default {
   mounted() {},
 
   methods: {
+    onFieldClick() {
+      if (!this.isMobile && !this.showPicker) {
+        setTimeout(() => {
+          document.body.addEventListener('click', this.onShowPicker, false);
+        }, 100);
+      }
+      this.showPicker = true;
+    },
+    onItemClick(row) {
+      this.onConfirm(row);
+      // this.onShowPicker();
+    },
+    onShowPicker() {
+      this.showPicker = !this.showPicker;
+    },
     onConfirm(e) {
-      this.showPicker = false;
       this.val = e.text;
       this.$emit('update:modelValue', e.id);
+      this.showPicker = false;
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.field-item {
+  position: relative;
+}
+.select-drawer {
+  left: 0;
+  right: 0;
+  position: absolute;
+  padding: 4px 0;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 4px 10px #0000001a;
+}
+.select-drawer-body {
+  max-height: 200px;
+  overflow-y: auto;
+}
+.select-drawer-item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 36px;
+  text-align: left;
+  cursor: pointer;
+  &:hover {
+    background: #ebebeb;
+  }
+}
 </style>

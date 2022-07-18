@@ -4,7 +4,7 @@
       <nav-bar></nav-bar>
     </template>
     <template #body>
-      <van-form label-width="80px">
+      <van-form label-width="85px">
         <van-cell-group :border="false">
           <van-field
             required

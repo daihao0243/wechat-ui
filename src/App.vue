@@ -54,4 +54,14 @@ p {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.app-typo-text {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.app-text-color-red {
+  color: #f4433f;
+}
+.app-text-color-blue {
+  color: #1989fa;
+}
 </style>

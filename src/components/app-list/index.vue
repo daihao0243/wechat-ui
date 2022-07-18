@@ -6,7 +6,12 @@
       :key="index"
       :title="items.title"
     >
-      <van-cell v-for="(item, index) in items" :key="index" :title="item.title" :border="false">
+      <van-cell
+        v-for="(item, index) in items.list"
+        :key="index"
+        :title="item.title"
+        :border="false"
+      >
         <slot v-if="item.slot" :name="item.slot" :row="item"></slot>
         <Format v-else-if="item.format" :value="item.value" :type="item.format"></Format>
         <span v-else>

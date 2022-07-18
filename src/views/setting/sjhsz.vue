@@ -8,7 +8,7 @@
         <van-cell-group :border="false">
           <van-field
             required
-            label-width="80px"
+            label-width="85px"
             name="phone"
             label="新手机号码"
             placeholder="请输入新手机号码"
@@ -21,7 +21,7 @@
           </van-field>
           <van-field
             required
-            label-width="80px"
+            label-width="85px"
             name="phone"
             label="短信验证码"
             placeholder="请输入短信验证码"

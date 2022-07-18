@@ -22,6 +22,7 @@
         v-model="formData.date"
         required
         label="预约日期"
+        range
         placeholder="请选择预约日期"
         :rules="[{ required: true, message: '请选择预约日期' }]"
       ></app-form-date-picker>
@@ -38,7 +39,7 @@ export default {
       formData: {
         ywlx: '',
         wd: '',
-        date: '2022-7-23',
+        date: ['2022-7-9', '2022-7-20'],
       },
       yewlx: [
         { id: '1', text: '个人预约业务' },

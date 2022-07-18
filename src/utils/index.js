@@ -62,7 +62,7 @@ export const formatTime = (date, time) => {
   }
 }
 
-export const dateFormat = (val, formatStr = "YYYY-MM-DD HH:mm:ss") => {
+export const dateFormat = (val, formatStr = "YYYY-MM-DD") => {
   let date = new Date();
   if (typeof val == 'string' || typeof val == 'number') {
     // val = val.replace(/-/g, '/')
@@ -70,7 +70,6 @@ export const dateFormat = (val, formatStr = "YYYY-MM-DD HH:mm:ss") => {
   } else if (typeof val == 'object') {
     date = val
   }
-
   if (date == 'Invalid Date') {
     console.warn(date)
     return ''

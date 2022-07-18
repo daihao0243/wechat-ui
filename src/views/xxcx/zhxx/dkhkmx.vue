@@ -18,34 +18,36 @@ export default {
       list: [
         {
           title: '2022-07-13 16:22:47',
-          ywlx: {
-            title: '还款类型',
-            value: '正常',
-            slot: 'ywlx',
-          },
-          hkbj: {
-            title: '本金',
-            value: '2100',
-            format: 'money',
-            unit: '元',
-          },
-          hklx: {
-            title: '利息',
-            value: '12321',
-            format: 'money',
-            unit: '元',
-          },
-          hkfx: {
-            title: '罚息',
-            value: '12321',
-            format: 'money',
-            unit: '元',
-          },
-          hkh: {
-            title: '合计',
-            value: '12321',
-            format: 'money',
-            unit: '元',
+          list: {
+            ywlx: {
+              title: '还款类型',
+              value: '正常',
+              slot: 'ywlx',
+            },
+            hkbj: {
+              title: '本金',
+              value: '2100',
+              format: 'money',
+              unit: '元',
+            },
+            hklx: {
+              title: '利息',
+              value: '12321',
+              format: 'money',
+              unit: '元',
+            },
+            hkfx: {
+              title: '罚息',
+              value: '12321',
+              format: 'money',
+              unit: '元',
+            },
+            hkh: {
+              title: '合计',
+              value: '12321',
+              format: 'money',
+              unit: '元',
+            },
           },
         },
       ],

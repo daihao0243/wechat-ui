@@ -4,7 +4,7 @@
     <div>
       <p>
         若登录页面出现异常或操作过程中遇到系统报错，
-        <a href="javascript:void(0)" @click="onShowMore">请联系我们 </a>。
+        <a class="link" href="javascript:void(0)" @click="onShowMore">请联系我们 </a>。
       </p>
     </div>
 
@@ -70,6 +70,9 @@ export default {
   &-list {
     margin: 20px;
     font-size: 13px;
+  }
+  .link {
+    color: var(--van-blue);
   }
 }
 @media (max-width: 800px) {

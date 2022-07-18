@@ -70,6 +70,7 @@
                         selector.indexOf(new Date(nowDate.year, index, day).getTime()) > -1,
                     }"
                     :disabled="item.disable.indexOf(index + '-' + day) > -1"
+                    :data-id="new Date(nowDate.year, index, day).getTime()"
                     @click="onDayClick(index, day)"
                   >
                     {{ day }}
@@ -106,7 +107,11 @@ export default {
   },
   props: {
     modelValue: {
-      type: [String, Array],
+      type: [String, Object, Array],
+      validator(value) {
+        let type = typeof value;
+        return type == 'object' ? true : type == 'string' && new Date(value) != 'Invalid Date';
+      },
     },
     minDate: {
       type: Object,
@@ -124,23 +129,42 @@ export default {
   watch: {
     modelValue: {
       handler(val) {
-        if (this.isInset) {
-          this.isInset = false;
-        } else {
-          var str = val.replaceAll('-', ',');
-          var defaultDate = new Date(str);
-          this.selector = defaultDate.getTime();
-          this.selectorType = 3;
-          this.init(defaultDate);
-          // this.swiper.slideTo(defaultDate.getMonth(), 300, false);
+        console.log('val', val);
+        let date = [new Date()];
+        if (val) {
+          if (typeof val == 'string') {
+            date = [new Date(val)];
+          } else if (typeof val == 'object') {
+            if (this.range) {
+              if (val && val.length > 0) {
+                date = val.map((item) => {
+                  return new Date(item);
+                });
+              }
+            } else {
+              date = [val];
+            }
+          }
         }
+        //传入的日期不一样重新初始化日历
+        if (date[0] && date[0].getFullYear() != this.nowDate.year) {
+          this.init(date[0]);
+        } else if (this.dateList.length == 0) {
+          this.init();
+        }
+        this.selector = date.map((item) => {
+          return item.getTime();
+        });
+        this.selectorType = 3;
+        this.index = date[0].getMonth();
       },
+      immediate: true,
     },
   },
   computed: {
     getValue() {
       return this.selector.map((item) => {
-        return dateFormat(item, this.format);
+        return new Date(item);
       });
     },
   },
@@ -188,8 +212,7 @@ export default {
       this.dateList = this.getDatAry(date);
     },
     onDayClick(index, day) {
-      const datatime = this.nowDate.year + '-' + this.nowDate.month + '-' + day;
-      const timeStamp = new Date(datatime).getTime();
+      const timeStamp = new Date(this.nowDate.year, index, day).getTime();
       this.nowDate.day = day;
       if (this.range) {
         if (
@@ -206,12 +229,9 @@ export default {
       } else {
         this.selector = [timeStamp];
       }
-      console.log(timeStamp);
       this.isInset = true;
-      this.$emit(
-        'update:modelValue',
-        this.range ? this.getValue : dateFormat(timeStamp, this.format)
-      );
+      // this.range ? this.getValue : dateFormat(timeStamp, this.format)
+      this.$emit('update:modelValue', this.range ? this.getValue : new Date(timeStamp));
     },
     getDatAry(date) {
       var list = [];
@@ -241,32 +261,20 @@ export default {
       }
       return list;
     },
-    init(date) {
+    init(date = new Date()) {
       this.nowDate.year = date.getFullYear();
       this.nowDate.month = date.getMonth() + 1;
       this.nowDate.day = date.getDate();
-      for (var i = 1900; i < this.nowDate.year + 20; i++) {
+      for (var i = this.nowDate.year - 100; i < this.nowDate.year + 20; i++) {
         this.years.push(i);
       }
+      console.log(this.nowDate);
       this.dateList = this.getDatAry(date);
     },
   },
   mounted() {
     var defaultDate = new Date();
     this.toDay = defaultDate.getMonth() + '' + defaultDate.getDate();
-    if (this.modelValue) {
-      console.log(this.modelValue);
-      try {
-        var str = this.modelValue.replaceAll('-', ',');
-        defaultDate = new Date(str);
-        this.selector = [defaultDate.getTime()];
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    this.init(defaultDate);
-    this.index = this.nowDate.month - 1;
-    // this.swiper.slideTo(this.nowDate.month - 1, 300, false);
   },
 };
 </script>
